@@ -1,0 +1,100 @@
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #333;
+    padding: 5px 5px;
+  }
+  
+  .navbar-logo a {
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .navbar-links li {
+    position: relative;
+  }
+  
+  .navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 5px;
+  }
+  
+  .navbar-links a:hover {
+    background-color: #555;
+    border-radius: 5px;
+  }
+  
+  .profile-menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    list-style: none;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .profile-menu:hover .dropdown {
+    display: block;
+  }
+  
+  .dropdown li {
+    padding: 5px 0;
+  }
+  
+  .dropdown li:hover {
+    background-color: #555;
+  }
+  
+
+  
+/* Media query for small screens */
+@media (max-width: 768px) {
+    .navbar-links {
+      gap: 5px;
+    }
+    .navbar-links li.cart-icon a {
+        display: flex;
+        align-items: center;
+      }
+  
+    .navbar-links a {
+      font-size:8px; 
+    }
+  
+    .navbar-logo a {
+      font-size: 10px; 
+    }
+  
+    .navbar-links li.cart-icon span {
+      display: none; /* Hide the word 'Cart' */
+    }
+  
+    .navbar-links li.cart-icon svg {
+      display: block; /* Show the cart icon */
+      width: 20px; /* Adjust icon size */
+      height: 20px;
+    }
+  }
+  
+  /* Hide cart icon on larger screens */
+  @media (min-width: 769px) {
+    .navbar-links li.cart-icon svg {
+      display: none;
+    }
+  
+    .navbar-links li.cart-icon span {
+      display: inline; /* Show the word 'Cart' */
+    }
+  }
+    
