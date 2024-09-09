@@ -6,20 +6,22 @@ import './ProductPage.css';
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
 
-  // Fetch products from the backend when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
-        setProducts(response.data); // Set the fetched products to state
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products`);
+        setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-
+  
     fetchProducts();
   }, []);
-
+  
+  
+  
+  
   const handleAddToCart = (product) => {
     console.log(`Added ${product.name} to cart!`);
     // Logic for adding to cart

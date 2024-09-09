@@ -12,8 +12,8 @@ const ProductForm = ({ onProductAdded }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [preview, setPreview] = useState(null);
-  
-  const fileInputRef = useRef(null); // Reference to the file input
+
+  const fileInputRef = useRef(null);
 
   const handleChange = (e) => {
     setProductData({
@@ -28,7 +28,7 @@ const ProductForm = ({ onProductAdded }) => {
       ...productData,
       image: file,
     });
-    setPreview(URL.createObjectURL(file)); // Set image preview
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleRemoveImage = () => {
@@ -36,9 +36,9 @@ const ProductForm = ({ onProductAdded }) => {
       ...productData,
       image: null,
     });
-    setPreview(null); // Remove image preview
+    setPreview(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Clear the file input
+      fileInputRef.current.value = '';
     }
   };
 
@@ -46,7 +46,7 @@ const ProductForm = ({ onProductAdded }) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+  
     const formData = new FormData();
     formData.append('name', productData.name);
     formData.append('price', productData.price);
@@ -54,19 +54,19 @@ const ProductForm = ({ onProductAdded }) => {
     if (productData.image) {
       formData.append('image', productData.image);
     }
-
+  
     try {
       const response = await axios.post('/api/products', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ensure token is correctly set
         },
       });
       setLoading(false);
       setProductData({ name: '', price: '', description: '', image: null });
       setPreview(null);
       if (fileInputRef.current) {
-        fileInputRef.current.value = ''; // Clear the file input after submit
+        fileInputRef.current.value = '';
       }
       onProductAdded(response.data);
     } catch (error) {
@@ -74,7 +74,7 @@ const ProductForm = ({ onProductAdded }) => {
       setError('Failed to add product. Please try again.');
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="product-form">
       {error && <p className="error">{error}</p>}
@@ -112,7 +112,7 @@ const ProductForm = ({ onProductAdded }) => {
           type="file"
           name="image"
           onChange={handleFileChange}
-          ref={fileInputRef} // Attach ref to the file input
+          ref={fileInputRef}
           required={!preview}
         />
         {preview && (

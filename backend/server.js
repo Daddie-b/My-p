@@ -5,25 +5,22 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
+
+// Middleware
+app.use(express.json()); // Parse JSON request bodies
+app.use(cors({
+  origin: process.env.FRONTEND_URL // Configure CORS to allow requests from the frontend URL
+}));
 
 // Serve static files from the uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
 // Import Routes
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/Product'); // Import the product routes
-
-dotenv.config();
-
-// Middleware
-app.use(express.json());
-app.use(cors({
-  origin: process.env.FRONTEND_URL // Configure CORS to allow requests from the frontend URL
-}));
 
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
@@ -35,8 +32,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB Connected'))
-.catch((err) => console.log('MongoDB connection error:', err));
-
+.catch((err) => console.error('MongoDB connection error:', err));
 
 // Start Server
 const PORT = process.env.PORT || 5000;

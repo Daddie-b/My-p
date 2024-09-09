@@ -2,16 +2,13 @@ import React from 'react';
 
 const ProductList = ({ products }) => {
   return (
-    <div>
-      <h2>Product List</h2>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <strong>{product.name}</strong> - ${product.price} - Rating: {product.rating}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {products.map(product => (
+        <li key={product.id}> {/* Ensure each item has a unique key */}
+          {product.name} - ${product.price}
+        </li>
+      ))}
+    </ul>
   );
 };
 
