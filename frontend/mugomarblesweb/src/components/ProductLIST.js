@@ -4,7 +4,7 @@ const ProductList = ({ products }) => {
   return (
     <ul>
       {products.map(product => (
-        <li key={product.id}> {/* Ensure each item has a unique key */}
+        <li key={product.id}> {  }
           {product.name} - ${product.price}
         </li>
       ))}

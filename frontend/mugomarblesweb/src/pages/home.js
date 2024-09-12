@@ -1,10 +1,13 @@
+// src/pages/ProductPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductsList from '../components/ProductsList';
+import { useCart } from '../context/CartContext';
 import './ProductPage.css';
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -15,22 +18,14 @@ const ProductPage = () => {
         console.error('Error fetching products:', error);
       }
     };
-  
     fetchProducts();
   }, []);
-  
-  
-  
-  
-  const handleAddToCart = (product) => {
-    console.log(`Added ${product.name} to cart!`);
-    // Logic for adding to cart
-  };
 
-  const handleBuyNow = (product) => {
-    console.log(`Buying ${product.name} now!`);
-    // Logic for immediate purchase
+  const handleAddToCart = (product, quantity) => {
+    addToCart({ ...product, quantity });
+    console.log(`Added ${quantity} ${product.name}(s) to cart!`);
   };
+  
 
   return (
     <div className="product-page">
@@ -38,7 +33,6 @@ const ProductPage = () => {
       <ProductsList
         products={products}
         onAddToCart={handleAddToCart}
-        onBuyNow={handleBuyNow}
       />
     </div>
   );

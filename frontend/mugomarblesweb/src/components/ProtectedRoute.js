@@ -1,3 +1,4 @@
+// src/components/ProtectedRoute.js
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ const parseJwt = (token) => {
 
 const ProtectedRoute = ({ element: Component, allowedRoles, ...rest }) => {
   const token = localStorage.getItem('token');
-  const userRole = token ? parseJwt(token).role : null; // Function to parse JWT and get role
+  const userRole = token ? parseJwt(token).role : null;
 
   return allowedRoles.includes(userRole) ? (
     <Component {...rest} />

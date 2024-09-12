@@ -5,7 +5,9 @@ import NavBar from './components/NavBar';
 import LoginSignup from './pages/LoginSignup';
 import Home from './pages/home';
 import AdminPage from './pages/AdminPage';
-import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import ProtectedRoute from './components/ProtectedRoute';
+import CartPage from './pages/CartPage';
+import MyOrders from './pages/MyOrders';
 
 function App() {
   return (
@@ -13,19 +15,21 @@ function App() {
       <div className="App">
         <NavBar />
         <header className="App-header">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginSignup />} />
-          <Route path="/register" element={<LoginSignup />} />
-          <Route path="/home" element={<Home />} />
-          <Route 
-            path="/admin" 
-            element={<ProtectedRoute element={AdminPage} allowedRoles={['admin']} />} 
-          />
-         
-        </Routes>
-
-          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginSignup />} />
+            <Route path="/register" element={<LoginSignup />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/cart" element={<CartPage />} /> {/* Corrected */}
+            <Route 
+              path="/admin" 
+              element={<ProtectedRoute element={<AdminPage />} allowedRoles={['admin']} />} 
+            />
+            <Route
+              path="/orders"
+              element={<ProtectedRoute element={<MyOrders />} allowedRoles={['user']} />}
+            />
+          </Routes>
         </header>
       </div>
     </Router>
@@ -33,4 +37,3 @@ function App() {
 }
 
 export default App;
-  

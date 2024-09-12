@@ -1,11 +1,14 @@
+// src/components/NavBar.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { useCart } from '../context/CartContext';
 import './NavBar.css';
 
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { cartItems } = useCart(); // Get cart items from context
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,10 +29,9 @@ const NavBar = () => {
         <li className="cart-icon">
           <Link to="/cart">
             <FontAwesomeIcon icon={faShoppingCart} />
-            <span>Cart</span>
+            <span>Cart ({cartItems.length})</span> {/* Display number of items */}
           </Link>
         </li>
-        
         {isLoggedIn ? (
           <li className="profile-menu">
             <Link to="/profile">Profile</Link>
@@ -46,7 +48,6 @@ const NavBar = () => {
         ) : (
           <>
             <li><Link to="/login">Sign Up</Link></li>
-            
           </>
         )}
       </ul>
