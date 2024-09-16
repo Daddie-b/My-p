@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 
 const CartPage = () => {
   const { cartItems, updateCartItemQuantity, removeFromCart } = useCart();
+  const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate();
 
-  // Calculate total cost of all items in the cart
-  const totalCost = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Handle item selection for ordering
+  const handleSelectItem = (productId) => {
+    setSelectedItems(prevSelected => 
+      prevSelected.includes(productId)
+        ? prevSelected.filter(id => id !== productId)
+        : [...prevSelected, productId]
+    );
+  };
+
+  // Calculate total cost of selected items
+  const totalCost = cartItems
+    .filter(item => selectedItems.includes(item._id))
+    .reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleQuantityChange = (productId, newQuantity) => {
     updateCartItemQuantity(productId, newQuantity);
+  };
+
+  const handlePlaceOrder = () => {
+    const itemsToOrder = cartItems.filter(item => selectedItems.includes(item._id));
+    if (itemsToOrder.length > 0) {
+      navigate('/order', { state: { cartItems: itemsToOrder } });
+    } else {
+      alert("Please select items to order");
+    }
   };
 
   return (
@@ -22,9 +45,14 @@ const CartPage = () => {
       ) : (
         <>
           <ul>
-            {cartItems.map((item) => (
-              <li key={item.id}>
+            {cartItems.map((item, index) => (
+              <li key={item._id || index}> {/* Ensures unique key */}
                 <div className="cart-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item._id)}
+                    onChange={() => handleSelectItem(item._id)}
+                  />
                   <img src={item.image} alt={item.name} className="cart-item-image" />
                   <div className="cart-item-details">
                     <h3>{item.name}</h3>
@@ -35,11 +63,11 @@ const CartPage = () => {
                       <input
                         type="number"
                         min="1"
-                        value={item.quantity}
-                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                        value={item.quantity || 1}  
+                        onChange={(e) => handleQuantityChange(item._id, parseInt(e.target.value))}
                       />
                     </div>
-                    <button onClick={() => removeFromCart(item.id)} className="delete-icon">
+                    <button onClick={() => removeFromCart(item._id)} className="delete-icon">
                       <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                   </div>
@@ -47,9 +75,12 @@ const CartPage = () => {
               </li>
             ))}
           </ul>
-          {/* Display total cost at the bottom */}
+          {/* Display total cost of selected items */}
           <div className="cart-total">
             <h2>Total Cost: KSh {totalCost}</h2>
+            <button onClick={handlePlaceOrder} className="order-button">
+              Place Order
+            </button>
           </div>
         </>
       )}

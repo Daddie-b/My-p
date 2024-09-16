@@ -1,16 +1,43 @@
 .cart-page {
+  max-width: 800px; /* Narrow the cart page */
+  margin: 0 auto;   /* Center the cart page */
   padding: 20px;
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+h1 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
 }
 
 .cart-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff; /* White background for items */
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1); /* Light shadow for each item */
+  transition: transform 0.2s;
+}
+
+.cart-item:hover {
+  transform: translateY(-2px); /* Lift item on hover */
 }
 
 .cart-item-image {
-  width: 100px;
-  height: 100px;
+  width: 80px; /* Make the image smaller */
+  height: 80px;
   object-fit: cover;
   border-radius: 8px;
   margin-right: 20px;
@@ -22,6 +49,17 @@
   flex-grow: 1;
 }
 
+.cart-item-details h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+  color: #333;
+}
+
+.cart-item-details p {
+  margin: 4px 0;
+  color: #666;
+}
+
 .cart-item-quantity {
   display: flex;
   align-items: center;
@@ -30,22 +68,25 @@
 
 .cart-item-quantity label {
   margin-right: 10px;
+  color: #333;
 }
 
 .cart-item-quantity input {
-  width: 60px;
-  padding: 4px;
+  width: 50px;
+  padding: 6px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 4px;
+  background-color: #f5f5f5;
 }
 
 .delete-icon {
   background: none;
   border: none;
-  color: #dc3545; /* Red color for the delete icon */
+  color: #dc3545; /* Red color for delete icon */
   font-size: 20px;
   cursor: pointer;
+  margin-left: 20px; /* Space from the quantity */
 }
 
 .delete-icon:hover {
@@ -55,10 +96,26 @@
 .cart-total {
   margin-top: 20px;
   text-align: right;
+  font-size: 20px;
 }
 
 .cart-total h2 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #333;
+}
+
+.order-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.order-button:hover {
+  background-color: #218838;
 }

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import LoginSignup from './pages/LoginSignup';
-import Home from './pages/home';
+import Home from './pages/home'; // Ensure consistency in file names (capitalization)
 import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import CartPage from './pages/CartPage';
@@ -20,10 +20,10 @@ function App() {
             <Route path="/login" element={<LoginSignup />} />
             <Route path="/register" element={<LoginSignup />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/cart" element={<CartPage />} /> {/* Corrected */}
-            <Route 
-              path="/admin" 
-              element={<ProtectedRoute element={<AdminPage />} allowedRoles={['admin']} />} 
+            <Route path="/cart" element={<CartPage />} />
+            <Route
+              path="/admin"
+              element={<ProtectedRoute element={<AdminPage />} allowedRoles={['admin']} />}
             />
             <Route
               path="/orders"
