@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import LoginSignup from './pages/LoginSignup';
-import Home from './pages/home'; // Ensure consistency in file names (capitalization)
+import Home from './pages/home'; 
 import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import CartPage from './pages/CartPage';

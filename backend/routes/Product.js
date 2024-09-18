@@ -5,6 +5,7 @@ const { protect } = require('../middleware/authMiddleware'); // Only import prot
 const upload = require('../middleware/uploadMiddleware'); // Import multer middleware
 const router = express.Router();
 
+
 // Add a new product (Any authenticated user)
 router.post('/', protect, upload.single('image'), async (req, res) => {
   const { name, price, description } = req.body;
@@ -33,6 +34,21 @@ router.get('/', async (req, res) => {
   } catch (err) {
     console.error('Error fetching products:', err); // Log any errors
     res.status(500).json({ message: 'Error fetching products' });
+  }
+});
+
+
+router.delete('/:id', protect, admin, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete product' });
   }
 });
 

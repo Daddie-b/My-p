@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
+
 dotenv.config(); // Load environment variables from .env file
 
 const app = express();
@@ -25,6 +26,20 @@ const productRoutes = require('./routes/Product'); // Import the product routes
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
+
+
+app.delete('/api/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    // Delete the product from the database
+    await Product.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete product' });
+  }
+});
+
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

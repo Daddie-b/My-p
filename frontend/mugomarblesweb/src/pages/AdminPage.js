@@ -10,6 +10,8 @@ const AdminPage = () => {
     setProducts([...products, newProduct]);
   };
 
+  
+
   return (
     <div className="admin-page">
       <h1>Admin Dashboard</h1>
