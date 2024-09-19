@@ -22,10 +22,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Import Routes
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/Product'); // Import the product routes
+const orderRoutes = require('./routes/orders'); // Import the order routes
 
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
+app.use('/api/orders', orderRoutes); // Order routes
 
 
 app.delete('/api/products/:id', async (req, res) => {
@@ -38,8 +40,6 @@ app.delete('/api/products/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete product' });
   }
 });
-
-
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

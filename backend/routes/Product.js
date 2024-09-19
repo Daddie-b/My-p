@@ -1,10 +1,9 @@
 // routes/Product.js
 const express = require('express');
 const Product = require('../models/Product');
-const { protect } = require('../middleware/authMiddleware'); // Only import protect
-const upload = require('../middleware/uploadMiddleware'); // Import multer middleware
+const { protect, admin } = require('../middleware/authMiddleware');
+const upload = require('../middleware/uploadMiddleware'); // Ensure upload middleware is correctly imported
 const router = express.Router();
-
 
 // Add a new product (Any authenticated user)
 router.post('/', protect, upload.single('image'), async (req, res) => {

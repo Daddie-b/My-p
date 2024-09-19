@@ -30,12 +30,20 @@ const CartPage = () => {
 
   const handlePlaceOrder = () => {
     const itemsToOrder = cartItems.filter(item => selectedItems.includes(item._id));
+    const totalAmount = totalCost; // Total cost of selected items
+  
     if (itemsToOrder.length > 0) {
-      navigate('/order', { state: { cartItems: itemsToOrder } });
+      navigate('/order', {
+        state: {
+          cartItems: itemsToOrder,
+          totalAmount: totalAmount
+        }
+      });
     } else {
       alert("Please select items to order");
     }
   };
+  
 
   return (
     <div className="cart-page">
