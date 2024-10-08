@@ -8,6 +8,7 @@ import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import CartPage from './pages/CartPage';
 import MyOrders from './pages/MyOrders';
+import OrderPage from './pages/OrderPage';
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
               path="/orders"
               element={<ProtectedRoute element={<MyOrders />} allowedRoles={['user']} />}
             />
+                        <Route
+              path="/order" element={<OrderPage />} // Add the route for OrderPage
+            />
+          
           </Routes>
         </header>
       </div>

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useCart } from '../context/CartContext';
+//import { AuthContext } from '../context/AuthContext'; // Import your AuthContext
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 
 const CartPage = () => {
-  const { cartItems, updateCartItemQuantity, removeFromCart } = useCart();
+  const { cartItems, setCartItems, updateCartItemQuantity, removeFromCart } = useCart();
+  const { user } = useContext(AuthContext); // Access the user from AuthContext
   const [selectedItems, setSelectedItems] = useState([]);
   const navigate = useNavigate();
 
@@ -28,23 +30,36 @@ const CartPage = () => {
     updateCartItemQuantity(productId, newQuantity);
   };
 
-  const handlePlaceOrder = () => {
+  const handleCheckOut = async () => {
     const itemsToOrder = cartItems.filter(item => selectedItems.includes(item._id));
-    const totalAmount = totalCost; // Total cost of selected items
+    const totalAmount = totalCost;
   
     if (itemsToOrder.length > 0) {
-      navigate('/order', {
-        state: {
-          cartItems: itemsToOrder,
-          totalAmount: totalAmount
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            items: itemsToOrder, 
+            totalAmount, 
+            userId: user._id // Use user ID from AuthContext
+          }),
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          navigate('/order', { state: { itemsToOrder, totalAmount, orderId: data.orderId } });
+        } else {
+          alert('Error placing the order');
         }
-      });
+      } catch (error) {
+        console.error('Error during checkout:', error);
+      }
     } else {
-      alert("Please select items to order");
+      alert("Please select items to check out");
     }
   };
   
-
   return (
     <div className="cart-page">
       <h1>Your Cart</h1>
@@ -86,8 +101,8 @@ const CartPage = () => {
           {/* Display total cost of selected items */}
           <div className="cart-total">
             <h2>Total Cost: KSh {totalCost}</h2>
-            <button onClick={handlePlaceOrder} className="order-button">
-              Place Order
+            <button onClick={handleCheckOut} className="order-button">
+              Check Out
             </button>
           </div>
         </>

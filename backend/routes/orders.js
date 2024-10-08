@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
-const { protect } = require('../middleware/authMiddleware');
-
+const { protect, admin } = require('../middleware/authMiddleware');
 
 // POST /api/orders - Create a new order
 router.post('/', protect, async (req, res) => {
@@ -25,6 +24,26 @@ router.post('/', protect, async (req, res) => {
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+
+// PUT /api/orders/:orderId/status - Update order status (Admin only)
+router.put('/:orderId/status', protect, admin, async (req, res) => {
+  const { status } = req.body;
+  const { orderId } = req.params;
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    order.status = status;
+    await order.save();
+
+    res.json({ message: 'Order status updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
