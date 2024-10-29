@@ -41,4 +41,21 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
+router.get('/api/orders', async (req, res) => {
+  const { status } = req.query; // Get status from query parameter
+
+  try {
+    let orders;
+    if (status) {
+      orders = await Order.find({ status }); // Find orders based on status
+    } else {
+      orders = await Order.find(); // Return all orders if no status is specified
+    }
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = router;
