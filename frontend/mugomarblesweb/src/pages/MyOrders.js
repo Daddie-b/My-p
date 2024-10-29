@@ -67,9 +67,7 @@ const MyOrders = () => {
 
   return (
     <div className="my-orders-page">
-      <h1>My Orders</h1>
-      
-      {/* Navigation Bar for filtering orders */}
+      <h1>My Orders</h1>      
       <nav className="order-filter-nav">
         <ul className="nav-list">
           <li>
@@ -86,6 +84,7 @@ const MyOrders = () => {
           </li>
         </ul>
       </nav>
+
 
       {filteredOrders.length === 0 ? (
         <p>No orders found.</p>

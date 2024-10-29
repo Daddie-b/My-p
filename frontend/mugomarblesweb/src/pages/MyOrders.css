@@ -1,75 +1,97 @@
-.my-orders-page {
-    padding: 20px;
-  }
-  
-  .order-filter-nav {
-    background-color: #f8f9fa; /* Light background for contrast */
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+/* MyOrders.css */
+
+/* General styles for the nav bar */
+.order-filter-nav {
+    background-color: #3b5998; /* Dark blue background */
+    padding: 10px 0; /* Padding to space it nicely */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   }
   
   .nav-list {
-    display: flex;
-    justify-content: space-around; /* Equal spacing between items */
-    list-style: none; /* Remove default list styling */
-    margin: 0;
-    padding: 0;
+    display: flex; /* Flexbox for horizontal layout */
+    justify-content: center; /* Center items */
+    list-style: none; /* Remove bullet points */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
   }
   
   .nav-list li {
-    flex: 1; /* Allow buttons to grow equally */
+    margin: 0; /* No margin between list items */
   }
   
   .nav-list button {
-    width: 100%; /* Full width buttons */
-    padding: 10px;
-    background-color: #161616; /* Primary color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transitions */
+    background-color: transparent; /* Transparent background */
+    color: #fff; /* White text */
+    border: 2px solid transparent; /* Initial transparent border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for button size */
+    margin: 0 5px; /* Space between buttons */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    cursor: pointer; /* Pointer cursor on hover */
   }
   
-  .nav-list button:hover {
-    background-color: #ff0000; /* Darker on hover */
-    transform: translateY(-2px); /* Slight lift on hover */
-  }
-  
+  /* Active button style */
   .nav-list button.active {
-    background-color: #000000; /* Highlight active button */
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for active state */
+    border-color: #f39c12; /* Highlight active button */
+    background-color: rgba(243, 156, 18, 0.2); /* Light orange background */
   }
+  
+  /* Button hover effect */
+  .nav-list button:hover {
+    border-color: #fff; /* White border on hover */
+    background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+  }
+  
   
   .orders-list {
     list-style: none;
     padding: 0;
   }
   
+  .orders-list li {
+    background-color: white; /* White background for each order */
+    border-radius: 5px;
+    margin-bottom: 15px; /* Space between orders */
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-items {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0; /* Space above order items */
+  }
+  
   .order-item {
-    padding: 10px;
-    border-bottom: 1px solid #e1e1e1; /* Divider between items */
+    padding: 5px 0; /* Space between items */
+    border-bottom: 1px solid #eaeaea; /* Divider between items */
   }
   
   .order-item:last-child {
-    border-bottom: none; /* Remove divider for the last item */
+    border-bottom: none; /* Remove last border */
   }
-
+  
+  .order-item p {
+    margin: 5px 0; /* Space between text elements */
+    color: #555; /* Dark gray for text */
+  }
+  
+  strong {
+    color: #333; /* Strong text color */
+  }
+  
   .payment-button {
-    padding: 10px 15px;
-    background-color: #28a745;
+    padding: 10px 20px;
+    background-color: #28a745; /* Bootstrap success color */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    margin-top: 10px; /* Space above button */
   }
   
   .payment-button:hover {
-    background-color: #218838;
+    background-color: #218838; /* Darker green on hover */
   }
-  
   
