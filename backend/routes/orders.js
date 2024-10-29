@@ -1,49 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware');
 
 // POST /api/orders - Create a new order
 router.post('/', protect, async (req, res) => {
   try {
-    const { items, total, status } = req.body;
+    const { items, total, status, paymentMethod } = req.body;
 
-    // Create new order
+    if (!items || !total) {
+      return res.status(400).json({ error: "Items and total are required." });
+    }
+
+    const paidStatus = paymentMethod === 'debt' ? false : true;
+
     const newOrder = new Order({
       items,
       total,
-      status: status || 'pending', // default to 'pending' if status not provided
-      userId: req.user._id // Assuming user is authenticated
+      status: status || 'pending',
+      paid: paidStatus,
+      userId: req.user._id
     });
 
-    // Save the order to the database
     const savedOrder = await newOrder.save();
-
-    // Return the saved order as a response
     res.status(201).json(savedOrder);
   } catch (error) {
-    console.error('Error creating order:', error);
+    console.error('Error creating order:', error.message);
     res.status(500).json({ error: 'Failed to create order' });
   }
 });
 
-// PUT /api/orders/:orderId/status - Update order status (Admin only)
-router.put('/:orderId/status', protect, admin, async (req, res) => {
-  const { status } = req.body;
-  const { orderId } = req.params;
-
+// GET /api/orders - Fetch user orders
+router.get('/', protect, async (req, res) => {
   try {
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
-    }
-
-    order.status = status;
-    await order.save();
-
-    res.json({ message: 'Order status updated successfully' });
+    const orders = await Order.find({ userId: req.user._id });
+    res.json(orders);
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error("Error fetching orders:", error.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

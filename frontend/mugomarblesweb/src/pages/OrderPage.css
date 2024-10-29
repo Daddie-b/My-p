@@ -1,0 +1,88 @@
+.order-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .order-page h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .order-page ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .order-page li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+  
+  .order-page h3 {
+    font-size: 20px;
+    color: #444;
+    margin: 0;
+    padding-bottom: 5px;
+  }
+  
+  .order-page p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .total-amount {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .pay-now-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pay-now-button:hover {
+    background-color: #218838;
+  }
+  
+  .pay-now-button:active {
+    background-color: #1e7e34;
+  }
+  
+  @media (max-width: 600px) {
+    .order-page {
+      padding: 15px;
+    }
+  
+    .order-page h1 {
+      font-size: 24px;
+    }
+  
+    .pay-now-button {
+      font-size: 16px;
+    }
+  }
+
+  

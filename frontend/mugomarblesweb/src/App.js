@@ -33,6 +33,7 @@ function App() {
                         <Route
               path="/order" element={<OrderPage />} // Add the route for OrderPage
             />
+            <Route path="/my-orders" element={<MyOrders />} /> 
           
           </Routes>
         </header>

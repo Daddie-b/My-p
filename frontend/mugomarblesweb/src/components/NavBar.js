@@ -37,7 +37,7 @@ const NavBar = () => {
             <Link to="/profile">Profile</Link>
             <ul className="dropdown">
               <li><Link to="/profile">My Profile</Link></li>
-              <li><Link to="/orders">My Orders</Link></li>
+              <li><Link to="/my-orders">My Orders</Link></li>
               <li><Link to="/favorites">Favorites</Link></li>
               <li onClick={() => {
                 localStorage.removeItem('token');

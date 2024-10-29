@@ -1,0 +1,60 @@
+.my-orders-page {
+    padding: 20px;
+  }
+  
+  .order-filter-nav {
+    background-color: #f8f9fa; /* Light background for contrast */
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .nav-list {
+    display: flex;
+    justify-content: space-around; /* Equal spacing between items */
+    list-style: none; /* Remove default list styling */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-list li {
+    flex: 1; /* Allow buttons to grow equally */
+  }
+  
+  .nav-list button {
+    width: 100%; /* Full width buttons */
+    padding: 10px;
+    background-color: #161616; /* Primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transitions */
+  }
+  
+  .nav-list button:hover {
+    background-color: #ff0000; /* Darker on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+  }
+  
+  .nav-list button.active {
+    background-color: #000000; /* Highlight active button */
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for active state */
+  }
+  
+  .orders-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    padding: 10px;
+    border-bottom: 1px solid #e1e1e1; /* Divider between items */
+  }
+  
+  .order-item:last-child {
+    border-bottom: none; /* Remove divider for the last item */
+  }
+  

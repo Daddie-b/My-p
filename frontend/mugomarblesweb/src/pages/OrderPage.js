@@ -1,68 +1,151 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import OrderDetails from '../components/OrderDetails'; // Ensure this component is defined
+import axios from 'axios';
+
 import './OrderPage.css';
 
 const OrderPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  
-  // Destructure itemsToOrder and totalAmount from the state
-  const { itemsToOrder, totalAmount } = state || {};
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
-  // Handle missing data case (if user manually goes to the order page without proper state)
+  const { itemsToOrder } = state || {};
+  const totalAmount = itemsToOrder
+    ? itemsToOrder.reduce((total, item) => total + item.price * item.quantity, 0)
+    : 0;
+
   useEffect(() => {
-    if (!itemsToOrder || !totalAmount) {
+    if (!itemsToOrder) {
       alert("No order details found. Redirecting to cart.");
       navigate('/cart');
     }
-  }, [itemsToOrder, totalAmount, navigate]);
+  }, [itemsToOrder, navigate]);
 
-  const [status, setStatus] = useState('in progress');
+  const handlePayNowClick = () => {
+    setShowPaymentOptions(true);
+  };
 
-  // Fetch status if necessary (simulated example)
-  useEffect(() => {
-    // Fetch updated status from server if needed
-    const fetchOrderStatus = async () => {
-      try {
-        const response = await fetch('/api/orders/status', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setStatus(data.status); // Update status if available
-        }
-      } catch (error) {
-        console.error('Error fetching order status:', error);
+  const handleMpesaPayment = async () => {
+    const phoneNumber = prompt("Enter your phone number in the format 2547XXXXXXXX:");
+    try {
+      const response = await fetch('/api/payment/pay', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ phoneNumber, amount: totalAmount }),
+      });
+
+      if (response.ok) {
+        alert("Payment initiated! Please complete the payment on your phone.");
+        navigate('/my-orders');
+      } else {
+        alert("Failed to initiate payment. Please try again.");
       }
-    };
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      alert("An error occurred during payment.");
+    }
+  };
 
-    fetchOrderStatus();
-  }, []);
+  const handleDebtPayment = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/orders`,
+        {
+          items: itemsToOrder,
+          total: totalAmount, // Use `totalAmount` here to specify the total cost
+          paymentMethod: 'debt',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Order placed with Debt. Status set to unpaid.");
+      navigate('/my-orders');
+    } catch (error) {
+      console.error("Error placing order:", error.response?.data || error.message);
+      alert("An error occurred while placing the order.");
+    }
+  };
+  
+  
 
   return (
     <div className="order-page">
       <h1>Your Order</h1>
 
-      {/* Navbar for tracking status */}
-      <nav className="order-status-nav">
-        <button className={status === 'in progress' ? 'active' : ''}>In Progress</button>
-        <button className={status === 'completed' ? 'active' : ''}>Completed</button>
-        <button className={status === 'cancelled' ? 'active' : ''}>Cancelled</button>
-      </nav>
-
-      {/* Order details */}
-      {itemsToOrder && totalAmount ? (
-        <OrderDetails cartItems={itemsToOrder} totalAmount={totalAmount} />
+      {itemsToOrder && itemsToOrder.length > 0 ? (
+        <ul>
+          {itemsToOrder.map((item) => (
+            <li key={item.productId}>
+              <h3>{item.name}</h3>
+              <p>Quantity: {item.quantity}</p>
+              <p>Price per unit: KSh {item.price}</p>
+              <p>Total: KSh {item.price * item.quantity}</p>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p>No items in the order</p>
       )}
 
-      {/* Conditionally show payment button if order is still in progress */}
-      {status === 'in progress' && (
-        <button className="pay-now-button">
+      <div className="total-amount">
+        <h2>Total Cost: KSh {totalAmount}</h2>
+      </div>
+
+      {showPaymentOptions ? (
+        <div className="payment-options" style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '20px', // Space between buttons
+          marginTop: '20px' // Space above the buttons
+      }}>
+          <button 
+              onClick={handleMpesaPayment} 
+              className="payment-button mpesa-button" 
+              style={{
+                  backgroundColor: '#1EBEA5', // Mpesa button color
+                  color: '#FFFFFF', // Text color
+                  padding: '10px 20px', // Vertical and horizontal padding
+                  border: 'none', // Remove default border
+                  borderRadius: '5px', // Rounded corners
+                  cursor: 'pointer', // Pointer cursor on hover
+                  fontSize: '16px', // Font size
+                  transition: 'background-color 0.3s ease' // Smooth transition
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#16A58D'} // Darker shade on hover
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1EBEA5'} // Original color
+          >
+              Mpesa
+          </button>
+          <button 
+              onClick={handleDebtPayment} 
+              className="payment-button debt-button" 
+              style={{
+                  backgroundColor: '#FF5733', // Debt button color
+                  color: '#FFFFFF', // Text color
+                  padding: '10px 20px', // Vertical and horizontal padding
+                  border: 'none', // Remove default border
+                  borderRadius: '5px', // Rounded corners
+                  cursor: 'pointer', // Pointer cursor on hover
+                  fontSize: '16px', // Font size
+                  transition: 'background-color 0.3s ease' // Smooth transition
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E04F28'} // Darker shade on hover
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF5733'} // Original color
+          >
+              Debt
+          </button>
+      </div>
+      
+      ) : (
+        <button onClick={handlePayNowClick} className="pay-now-button">
           Pay Now
         </button>
       )}

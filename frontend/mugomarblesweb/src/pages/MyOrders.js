@@ -1,4 +1,3 @@
-// src/pages/MyOrders.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './MyOrders.css';
@@ -11,7 +10,7 @@ const MyOrders = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/orders`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(response.data);
       } catch (error) {
@@ -29,13 +28,23 @@ const MyOrders = () => {
         <p>No orders found.</p>
       ) : (
         <ul className="orders-list">
-          {orders.map((order) => (
-            <li key={order._id}>
-              <h3>Order #{order._id}</h3>
-              <p>Total: KSh {order.total}</p>
-              <p>Status: {order.status}</p>
-            </li>
-          ))}
+          {orders.map((order) => {
+            // Define status logic based on paid and delivered fields
+            let status;
+            if (order.paid && order.delivered) {
+              status = 'Completed';
+            } else {
+              status = order.paid ? 'Paid' : 'Unpaid';
+            }
+
+            return (
+              <li key={order._id}>
+                {/* Order ID is hidden as requested */}
+                <p>Total: KSh {order.total}</p>
+                <p>Status: {status}</p>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
