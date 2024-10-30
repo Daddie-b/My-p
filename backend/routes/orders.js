@@ -1,6 +1,8 @@
+// routes/orderRoutes.js
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const { protect } = require('../middleware/authMiddleware');
 
 // POST /api/orders - Create a new order
@@ -14,8 +16,23 @@ router.post('/', protect, async (req, res) => {
 
     const paidStatus = paymentMethod === 'debt' ? false : true;
 
+    // Enrich items with product name and price if they are not provided directly
+    const enrichedItems = await Promise.all(
+      items.map(async (item) => {
+        const product = await Product.findById(item.productId);
+        if (!product) throw new Error('Product not found');
+        
+        return {
+          productId: item.productId,
+          name: item.name || product.name, // Use provided name or fetch from Product model
+          quantity: item.quantity,
+          price: item.price || product.price // Use provided price or fetch from Product model
+        };
+      })
+    );
+
     const newOrder = new Order({
-      items,
+      items: enrichedItems,
       total,
       status: status || 'pending',
       paid: paidStatus,
@@ -30,10 +47,18 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
-// GET /api/orders - Fetch user orders
+// GET /api/orders - Fetch user orders with optional status filter
 router.get('/', protect, async (req, res) => {
+  const { status } = req.query;
+
   try {
-    const orders = await Order.find({ userId: req.user._id });
+    let orderQuery = Order.find({ userId: req.user._id });
+
+    if (status) {
+      orderQuery = orderQuery.where('status').equals(status);
+    }
+
+    const orders = await orderQuery; // Directly fetch without populating
     res.json(orders);
   } catch (error) {
     console.error("Error fetching orders:", error.message);
@@ -41,21 +66,5 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-router.get('/api/orders', async (req, res) => {
-  const { status } = req.query; // Get status from query parameter
-
-  try {
-    let orders;
-    if (status) {
-      orders = await Order.find({ status }); // Find orders based on status
-    } else {
-      orders = await Order.find(); // Return all orders if no status is specified
-    }
-    res.json(orders);
-  } catch (error) {
-    console.error('Error fetching orders:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
 module.exports = router;

@@ -23,11 +23,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/Product'); // Import the product routes
 const orderRoutes = require('./routes/orders'); // Import the order routes
+const contactRoutes = require('./routes/contactRoutes');
 
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
 app.use('/api/orders', orderRoutes); // Order routes
+app.use('/api/contact', contactRoutes);
 
 
 app.delete('/api/products/:id', async (req, res) => {
