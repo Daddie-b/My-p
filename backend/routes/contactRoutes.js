@@ -1,42 +1,20 @@
-// routes/contactRoutes.js
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
-const { protect, admin } = require('../middleware/authMiddleware'); // Ensure only admin can update
 
-router.get('/', async (req, res) => {
-  console.log('Received GET request for contact info');
+// POST request to update contact information
+router.post('/update', async (req, res) => {
   try {
-      const contactInfo = await Contact.findOne();
-      res.json(contactInfo);
-  } catch (error) {
-      console.error(error); // Log the error for debugging
-      res.status(500).json({ error: 'Server error' });
-  }
-});
-
-
-// PUT /api/contact - Update contact info for admin
-router.put('/', protect, admin, async (req, res) => {
-  try {
-    const { address, phone, email } = req.body;
-    let contactInfo = await Contact.findOne();
-
-    if (contactInfo) {
-      // Update existing contact information
-      contactInfo.address = address;
-      contactInfo.phone = phone;
-      contactInfo.email = email;
-    } else {
-      // Create new contact info if not exists
-      contactInfo = new Contact({ address, phone, email });
+    // Update the contact information
+    const contact = await Contact.findOneAndUpdate({}, req.body, { new: true, runValidators: true });
+    if (!contact) {
+      return res.status(404).json({ error: 'Contact information not found' });
     }
-    await contactInfo.save();
-    res.json(contactInfo);
+    res.status(200).json(contact);
   } catch (error) {
+    console.error('Error updating contact info:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
 module.exports = router;
-

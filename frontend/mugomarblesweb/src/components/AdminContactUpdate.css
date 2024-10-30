@@ -1,0 +1,49 @@
+.contact-update {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .contact-update h2 {
+    text-align: center;
+  }
+  
+  .contact-update form div {
+    margin-bottom: 15px;
+  }
+  
+  .contact-update label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .contact-update input,
+  .contact-update textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .contact-update button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .contact-update button:hover {
+    background-color: #45a049;
+  }
+  
+  .whatsapp-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

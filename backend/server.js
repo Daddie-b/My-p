@@ -25,6 +25,7 @@ const productRoutes = require('./routes/Product'); // Import the product routes
 const orderRoutes = require('./routes/orders'); // Import the order routes
 const contactRoutes = require('./routes/contactRoutes');
 
+
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
