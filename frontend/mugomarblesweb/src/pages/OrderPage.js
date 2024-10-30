@@ -55,7 +55,12 @@ const OrderPage = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/orders`,
         {
-          items: itemsToOrder,
+          items: itemsToOrder.map(item => ({
+            productId: item.productId,
+            name: item.name, // Ensure you include the product name
+            price: item.price,
+            quantity: item.quantity
+          })),
           total: totalAmount, // Use `totalAmount` here to specify the total cost
           paymentMethod: 'debt',
         },
@@ -73,6 +78,7 @@ const OrderPage = () => {
       alert("An error occurred while placing the order.");
     }
   };
+  
   
   
 

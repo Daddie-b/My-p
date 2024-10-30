@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import LoginSignup from './pages/LoginSignup';
 import Home from './pages/home'; 
 import AdminPage from './pages/AdminPage';
+import AdminContactUpdate from './components/AdminContactUpdate'; 
 import ProtectedRoute from './components/ProtectedRoute';
 import CartPage from './pages/CartPage';
 import MyOrders from './pages/MyOrders';
