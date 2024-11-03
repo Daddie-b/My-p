@@ -24,14 +24,15 @@ const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/Product'); // Import the product routes
 const orderRoutes = require('./routes/orders'); // Import the order routes
 const contactRoutes = require('./routes/contactRoutes');
+const itemRoutes = require('./routes/ItemRoutes');
 
 
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
 app.use('/api/orders', orderRoutes); // Order routes
-app.use('/api/contact', contactRoutes);
-
+app.use('/api/Contact', contactRoutes);
+app.use('/api/items', itemRoutes);
 
 app.delete('/api/products/:id', async (req, res) => {
   const { id } = req.params;
