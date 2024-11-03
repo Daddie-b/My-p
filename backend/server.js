@@ -25,6 +25,8 @@ const productRoutes = require('./routes/Product'); // Import the product routes
 const orderRoutes = require('./routes/orders'); // Import the order routes
 const contactRoutes = require('./routes/contactRoutes');
 const itemRoutes = require('./routes/ItemRoutes');
+const teamRoutes = require('./routes/teamRoutes');
+const testimonialRoutes = require('./routes/testimonialsRoutes');
 
 
 // Routes Middleware
@@ -33,6 +35,8 @@ app.use('/api/products', productRoutes); // Product routes
 app.use('/api/orders', orderRoutes); // Order routes
 app.use('/api/Contact', contactRoutes);
 app.use('/api/items', itemRoutes);
+app.use('/api/team', teamRoutes);
+app.use('/api/about/testimonials', testimonialRoutes);
 
 app.delete('/api/products/:id', async (req, res) => {
   const { id } = req.params;

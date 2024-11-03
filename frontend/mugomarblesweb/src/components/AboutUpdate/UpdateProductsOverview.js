@@ -38,7 +38,7 @@ const UpdateProductsOverview = () => {
   
 
   return (
-    <SectionWrapper title="Update Items Overview">
+    <SectionWrapper title="Update Products Overview">
       <form onSubmit={handleSubmit}>
         {items.map((item, index) => (
           <div key={index}>

@@ -1,11 +1,10 @@
-// UpdateTeamSection.js
-import React, { useState,  } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import SectionWrapper from './SectionWrapper';
 import './UpdateAbout.css';
 
 const UpdateTeamSection = () => {
-  const [team, setTeam] = useState([]);
+  const [team, setTeam] = useState([{ name: '', role: '', photoUrl: '' }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -14,15 +13,30 @@ const UpdateTeamSection = () => {
     setTeam(updatedTeam);
   };
 
+  const addNewMember = () => {
+    setTeam([...team, { name: '', role: '', photoUrl: '' }]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    
+    team.forEach(member => {
+      formData.append('members', JSON.stringify(member)); // Append each member
+    });
+  
     try {
-      await axios.put('/api/about/team', team);
+      await axios.put('/api/team', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type for file upload
+        },
+      });
       alert('Team data updated successfully!');
     } catch (error) {
       console.error("Error updating team data:", error);
     }
   };
+  
 
   return (
     <SectionWrapper title="Update Team Section">
@@ -43,15 +57,17 @@ const UpdateTeamSection = () => {
               placeholder="Role"
               className="team-input"
             />
-            <input
-              name="photoUrl"
-              value={member.photoUrl}
+             <input
+              type="file"
+              name="image"
               onChange={(e) => handleChange(index, e)}
-              placeholder="Photo URL"
-              className="team-input"
+              accept="image/*"
             />
           </div>
         ))}
+        <button type="button" onClick={addNewMember} className="add-member-button">
+          Add Team Member
+        </button>
         <button type="submit" className="submit-button">Update Team</button>
       </form>
     </SectionWrapper>
