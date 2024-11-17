@@ -1,0 +1,26 @@
+.carousel-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .carousel-slide {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .slick-dots li button:before {
+    color: #bbb;
+  }
+  
+  .slick-dots li.slick-active button:before {
+    color: #333;
+  }
+  

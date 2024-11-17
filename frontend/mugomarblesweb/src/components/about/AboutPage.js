@@ -3,22 +3,21 @@ import HeroSection from './HeroSection';
 import BusinessOverview from './BusinessOverview';
 import JourneyTimeline from './JourneyTimeline';
 import TeamSection from './TeamSection';
-import ProductsOverview from './ProductsOverview';
-import Testimonials from './Testimonials';
-import LocationMap from './LocationMap';
-import Footer from './Footer';
+import ItemsOverview from './ItemsOverview';
+//import Testimonials from './Testimonials';
+//import LocationMap from './LocationMap';
+//import Footer from './Footer';
 
 const AboutPage = () => {
   return (
     <div>
       <HeroSection />
-      <BusinessOverview />
+      <ItemsOverview />
+      <BusinessOverview/>
       <JourneyTimeline />
       <TeamSection />
-      <ProductsOverview />
-      <Testimonials />
-      <LocationMap />
-      <Footer />
+      
+
     </div>
   );
 };

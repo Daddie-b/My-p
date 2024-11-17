@@ -1,0 +1,44 @@
+/* Container for rotating items column */
+.items-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Individual item styling */
+.column-item {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.column-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-details {
+  margin-top: 15px;
+}
+
+.item-details h3 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.item-details p {
+  font-size: 1em;
+  color: #666;
+}

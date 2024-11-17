@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PaymentButton from '../components/PaymentButton';
 import './MyOrders.css';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [paymentDetails, setPaymentDetails] = useState({ phoneNumber: '', amount: '' });
 
   const fetchOrders = async () => {
     try {
@@ -47,22 +51,32 @@ const MyOrders = () => {
     filterOrders();
   }, [activeFilter, orders]);
 
-  const handlePayment = async (orderId) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/orders/payment`,
-        { orderId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert("Payment successful!");
-      fetchOrders();
-    } catch (error) {
-      console.error('Error making payment:', error);
-      alert("Payment failed. Please try again.");
-    }
+  const handlePayNow = (order) => {
+    console.log('Pay Now clicked for order:', order);
+    setSelectedOrder(order);
+    setShowPaymentForm(true);
+    console.log('showPaymentForm:', showPaymentForm); // Log state change
   };
+  
 
+  const handlePaymentSubmit = () => {
+    const { phoneNumber, amount } = paymentDetails;
+    const phoneRegex = /^254\d{9}$/; // Ensure correct phone number format
+    if (!phoneRegex.test(phoneNumber)) {
+      alert("Please enter a valid phone number in the format 254XXXXXXXXX.");
+      return;
+    }
+    if (!amount || isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid payment amount.");
+      return;
+    }
+  
+    console.log("Payment details validated:", paymentDetails);
+    setShowPaymentForm(false);
+    setPaymentDetails({ phoneNumber: '', amount: '' });
+    fetchOrders();
+  };
+  
   return (
     <div className="my-orders-page">
       <h1>My Orders</h1>
@@ -106,15 +120,41 @@ const MyOrders = () => {
                 <p><strong>Status:</strong> {status}</p>
 
                 {status === 'Unpaid' && (
-                  <button onClick={() => handlePayment(order._id)} className="payment-button">
-                    Pay Now
-                  </button>
+                  <button onClick={() => handlePayNow(order)} className="pay-now-button">Pay Now</button>
                 )}
               </li>
             );
           })}
         </ul>
       )}
+
+{showPaymentForm && (
+  <div className="payment-form-modal">
+    <div className="modal-content">
+      <h3>Enter Payment Details</h3>
+      <label>
+        Phone Number:
+        <input
+          type="text"
+          value={paymentDetails.phoneNumber}
+          onChange={(e) => setPaymentDetails({ ...paymentDetails, phoneNumber: e.target.value })}
+        />
+      </label>
+      <label>
+        Amount:
+        <input
+          type="number"
+          value={paymentDetails.amount}
+          onChange={(e) => setPaymentDetails({ ...paymentDetails, amount: e.target.value })}
+        />
+      </label>
+      <button onClick={handlePaymentSubmit} className="submit-payment-button">Submit Payment</button>
+      <button onClick={() => setShowPaymentForm(false)} className="cancel-payment-button">Cancel</button>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };

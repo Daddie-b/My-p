@@ -104,7 +104,7 @@ const ProductForm = ({ onProductAdded }) => {
           name="description"
           value={productData.description}
           onChange={handleChange}
-        />
+        />  
       </div>
       <div>
         <label>Image:</label>

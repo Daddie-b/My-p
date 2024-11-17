@@ -5,7 +5,7 @@ import UpdateBusinessOverview from './UpdateBusinessOverview';
 import UpdateHeroSection from './UpdateHeroSection';
 import UpdateJourneyTimeline from './UpdateJourneyTimeline';
 import UpdateLocationMap from './UpdateLocationMap';
-import UpdateProductsOverview from './UpdateProductsOverview';
+import UpdateItemsOverview from './UpdateItemsOverview';
 import UpdateTeamSection from './UpdateTeamSection';
 import UpdateTestimonials from './UpdateTestimonials';
 
@@ -18,7 +18,7 @@ const About = () => {
       <UpdateHeroSection />
       <UpdateJourneyTimeline />
       <UpdateLocationMap />
-      <UpdateProductsOverview />
+      <UpdateItemsOverview />
       <UpdateTeamSection />
       <UpdateTestimonials />
     </div>

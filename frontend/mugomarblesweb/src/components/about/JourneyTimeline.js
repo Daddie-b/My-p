@@ -9,13 +9,20 @@ const JourneyTimeline = () => {
     const fetchMilestones = async () => {
       try {
         const response = await axios.get('/api/about/journey');
-        setMilestones(response.data);
+        // Adjust for nested structure if necessary
+        const milestonesData = Array.isArray(response.data.milestones)
+          ? response.data.milestones
+          : [];
+        setMilestones(milestonesData);
       } catch (error) {
         console.error("Error fetching milestones:", error);
       }
     };
     fetchMilestones();
   }, []);
+  
+  
+  
 
   return (
     <section className="journey-timeline">

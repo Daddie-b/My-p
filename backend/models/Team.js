@@ -1,4 +1,3 @@
-// backend/models/Team.js
 const mongoose = require('mongoose');
 
 const teamMemberSchema = new mongoose.Schema({
@@ -7,10 +6,6 @@ const teamMemberSchema = new mongoose.Schema({
   photoUrl: { type: String, required: true },
 });
 
-const teamSchema = new mongoose.Schema({
-  members: [teamMemberSchema],
-});
+const TeamMember = mongoose.model('TeamMember', teamMemberSchema);
 
-const Team = mongoose.model('Team', teamSchema);
-
-module.exports = Team;
+module.exports = TeamMember;

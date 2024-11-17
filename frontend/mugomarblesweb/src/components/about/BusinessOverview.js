@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AboutPage';
+import './AboutPage.css';
 
 const BusinessOverview = () => {
   const [overviewData, setOverviewData] = useState({
@@ -32,9 +32,15 @@ const BusinessOverview = () => {
         <p><strong>Vision:</strong> {overviewData.vision}</p>
       </div>
       <div className="right-column">
-        <h3>Message from the Founder</h3>
-        <p>{overviewData.founderMessage}</p>
-        <img src={overviewData.founderImage} alt="Founder" />
+        <div className="founder-section">
+          <img 
+            src={overviewData.founderImage ? `/uploads/${overviewData.founderImage}` : '/default-founder.png'} 
+            alt="Founder" 
+            className="founder-image"
+          />
+          <h3>Message from the Founder</h3>
+          <p className="founder-message">{overviewData.founderMessage}</p>
+        </div>
       </div>
     </section>
   );

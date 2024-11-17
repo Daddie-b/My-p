@@ -3,7 +3,7 @@ import axios from 'axios';
 import SectionWrapper from './SectionWrapper';
 import './UpdateAbout.css';
 
-const UpdateProductsOverview = () => {
+const UpdateItemsOverview = () => {
   const [items, setItems] = useState([{ name: '', description: '', image: null }]);
 
   const handleChange = (index, e) => {
@@ -24,10 +24,10 @@ const UpdateProductsOverview = () => {
       formData.append('items', JSON.stringify(items.map(({ name, description }) => ({ name, description }))));
   
       items.forEach((item) => {
-        formData.append('items[]', item.image); // Append images using 'items[]' field name
+        formData.append('items[]', item.image);
       });
   
-      await axios.post('/api/items', formData, {
+      await axios.post('/api/about/items', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Items updated successfully!');
@@ -35,10 +35,9 @@ const UpdateProductsOverview = () => {
       console.error("Error updating items:", error);
     }
   };
-  
 
   return (
-    <SectionWrapper title="Update Products Overview">
+    <SectionWrapper title="Update Items Overview">
       <form onSubmit={handleSubmit}>
         {items.map((item, index) => (
           <div key={index}>
@@ -70,4 +69,4 @@ const UpdateProductsOverview = () => {
   );
 };
 
-export default UpdateProductsOverview;
+export default UpdateItemsOverview;

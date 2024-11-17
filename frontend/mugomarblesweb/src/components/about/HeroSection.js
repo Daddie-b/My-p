@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './AboutPage';
+import './AboutPage.css'; // Make sure the CSS file is correctly referenced
 
 const HeroSection = () => {
   const [bannerData, setBannerData] = useState(null);

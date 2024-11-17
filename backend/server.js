@@ -11,10 +11,13 @@ dotenv.config(); // Load environment variables from .env file
 const app = express();
 
 // Middleware
-app.use(express.json()); // Parse JSON request bodies
+
 app.use(cors({
   origin: process.env.FRONTEND_URL // Configure CORS to allow requests from the frontend URL
 }));
+
+
+app.use(express.json()); // Parse JSON request bodies
 
 // Serve static files from the uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -27,16 +30,25 @@ const contactRoutes = require('./routes/contactRoutes');
 const itemRoutes = require('./routes/ItemRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const testimonialRoutes = require('./routes/testimonialsRoutes');
-
+const LocationRoutes = require('./routes/LocationRoutes'); 
+const journeyRoutes = require('./routes/JourneyRoutes');
+const overviewRoutes = require('./routes/OverviewRoutes'); 
+const bannerRoutes = require('./routes/bannerRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 // Routes Middleware
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
 app.use('/api/orders', orderRoutes); // Order routes
 app.use('/api/Contact', contactRoutes);
-app.use('/api/items', itemRoutes);
-app.use('/api/team', teamRoutes);
+app.use('/api/about', itemRoutes);
+app.use('/api/about/team', teamRoutes);
 app.use('/api/about/testimonials', testimonialRoutes);
+app.use('/api/about', LocationRoutes); 
+app.use('/api/about', journeyRoutes);
+app.use('/api/about', overviewRoutes); 
+app.use('/api/about', bannerRoutes);
+app.use('/api/orders', paymentRoutes);
 
 app.delete('/api/products/:id', async (req, res) => {
   const { id } = req.params;

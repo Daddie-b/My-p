@@ -1,3 +1,4 @@
+// frontend/src/components/UpdateTeamSection.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import SectionWrapper from './SectionWrapper';
@@ -13,23 +14,32 @@ const UpdateTeamSection = () => {
     setTeam(updatedTeam);
   };
 
-  const addNewMember = () => {
-    setTeam([...team, { name: '', role: '', photoUrl: '' }]);
+  const addNewMember = () => setTeam([...team, { name: '', role: '', photoUrl: '' }]);
+
+  const handleFileChange = (index, e) => {
+    const file = e.target.files[0];
+    const updatedTeam = [...team];
+    updatedTeam[index].photoUrl = file;
+    setTeam(updatedTeam);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     
-    team.forEach(member => {
-      formData.append('members', JSON.stringify(member)); // Append each member
+    // Add items as a single JSON string
+    formData.append('items', JSON.stringify(team));
+  
+    // Append images individually
+    team.forEach((member, index) => {
+      if (member.photoUrl instanceof File) {
+        formData.append('images', member.photoUrl); // Each image goes under 'images'
+      }
     });
   
     try {
-      await axios.put('/api/team', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Set content type for file upload
-        },
+      const response = await axios.put('/api/about/team', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Team data updated successfully!');
     } catch (error) {
@@ -57,11 +67,12 @@ const UpdateTeamSection = () => {
               placeholder="Role"
               className="team-input"
             />
-             <input
+            <input
               type="file"
-              name="image"
-              onChange={(e) => handleChange(index, e)}
+              name="photoUrl"
+              onChange={(e) => handleFileChange(index, e)}
               accept="image/*"
+              className="team-input"
             />
           </div>
         ))}

@@ -11,6 +11,9 @@ import CartPage from './pages/CartPage';
 import MyOrders from './pages/MyOrders';
 import OrderPage from './pages/OrderPage';
 import ContactPage from './pages/ContactPage';
+import AboutPage from './components/about/AboutPage';
+import CheckoutPage from './pages/checkoutPage';
+
 
 function App() {
   return (
@@ -45,6 +48,9 @@ function App() {
               path="/admin/contact" // Add this route for AdminContactUpdate
               element={<ProtectedRoute element={<AdminContactUpdate />} allowedRoles={['admin']} />} 
             /> 
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} /> 
+
           </Routes>
         </header>
       </div>
