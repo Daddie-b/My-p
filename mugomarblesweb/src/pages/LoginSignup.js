@@ -28,8 +28,8 @@ const LoginSignup = () => {
     }
   
     const url = action === 'Login' 
-      ? '${process.env.REACT_APP_BACKEND_URL}/api/auth/login' 
-      : '${process.env.REACT_APP_BACKEND_URL}/api/auth/register';
+      ? 'https://my-p-backend.onrender.com/api/auth/login' 
+      : 'https://my-p-backend.onrender.com/api/auth/register';
   
     try {
       const response = await fetch(url, {
