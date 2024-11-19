@@ -28,8 +28,8 @@ const LoginSignup = () => {
     }
   
     const url = action === 'Login' 
-      ? 'http://localhost:5000/api/auth/login' 
-      : 'http://localhost:5000/api/auth/register';
+      ? '${process.env.REACT_APP_BACKEND_URL}/api/auth/login' 
+      : '${process.env.REACT_APP_BACKEND_URL}/api/auth/register';
   
     try {
       const response = await fetch(url, {

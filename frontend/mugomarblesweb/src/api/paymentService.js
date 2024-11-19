@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const initiatePayment = async (paymentData) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/orders/payment', paymentData, {
+        const response = await axios.post('https://my-p-backend.onrender.com/api/orders/payment', paymentData, {
             headers: { 'Content-Type': 'application/json' },
         });
         return response.data;

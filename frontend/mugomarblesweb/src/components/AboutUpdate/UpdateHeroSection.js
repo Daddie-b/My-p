@@ -29,7 +29,7 @@ const UpdateHeroSection = () => {
     }
 
     try {
-      await axios.put('http://localhost:5000/api/about/banner', formData, {
+      await axios.put('https://my-p-backend.onrender.com/api/about/banner', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },

@@ -33,7 +33,7 @@ const AdminContactUpdate = () => {
       formData.append(key, contactInfo[key]);
     }
     try {
-      await axios.post('http://localhost:5000/api/contact/update', formData);
+      await axios.post('https://my-p-backend.onrender.com/api/contact/update', formData);
       alert('Contact information updated successfully!');
       // Optionally, clear the form or fetch updated data
     } catch (error) {

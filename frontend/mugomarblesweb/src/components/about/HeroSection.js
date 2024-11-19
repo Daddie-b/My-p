@@ -8,7 +8,7 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/about/banner');
+        const response = await axios.get('https://my-p-backend.onrender.com/api/about/banner');
         setBannerData(response.data);
       } catch (error) {
         console.error('Error fetching banner data:', error);

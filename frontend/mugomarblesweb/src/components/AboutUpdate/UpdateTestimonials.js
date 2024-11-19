@@ -38,7 +38,7 @@ const UpdateTestimonials = () => {
     });
   
     try {
-      await axios.put('http://localhost:5000/api/about/testimonials', formData, {
+      await axios.put('https://my-p-backend.onrender.com/api/about/testimonials', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

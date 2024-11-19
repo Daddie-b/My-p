@@ -8,7 +8,7 @@ const ContactDisplay = () => {
   useEffect(() => {
     const fetchContactInfo = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/contact');
+        const response = await axios.get('https://my-p-backend.onrender.com/api/contact');
         //console.log('Fetched contact info:', response.data);
         setContactInfo(response.data);
       } catch (error) {

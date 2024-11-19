@@ -10,7 +10,7 @@ const RotatingItemsColumn = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/about/items');
+        const response = await axios.get('https://my-p-backend.onrender.com/api/about/items');
         setItems(response.data);
         setVisibleItems(response.data.slice(0, 2)); // Show the first two items initially
       } catch (error) {
