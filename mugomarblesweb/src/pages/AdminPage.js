@@ -4,6 +4,8 @@ import ProductForm from '../components/ProductForm';
 import ProductList from '../components/ProductLIST';
 import AdminContactUpdate from '../components/AdminContactUpdate';
 import About from '../components/AboutUpdate/UpdateAbout';
+import DeliveryOrdersTable from '../components/DeliveryOrdersTable';
+//import AdminOrderList from '../components/OrderList';
 import './AdminPage.css';
 
 const AdminPage = () => {
@@ -20,6 +22,8 @@ const AdminPage = () => {
       <ProductList products={products} />
       <AdminContactUpdate />
       <About />
+     
+      <DeliveryOrdersTable />
     </div>
   );
 };

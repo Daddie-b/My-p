@@ -101,32 +101,36 @@ const MyOrders = () => {
         <p>No orders found.</p>
       ) : (
         <ul className="orders-list">
-          {filteredOrders.map((order) => {
-            let status = order.paid && order.delivered ? 'Completed' : order.paid ? 'Paid' : 'Unpaid';
+{filteredOrders.map((order) => {
+  //console.log("Order items:", order.items); // Log to inspect the items structure
 
-            return (
-              <li key={order._id}>
-                <h3>Order Summary</h3>
-                <ul className="order-items">
-                  {order.items.map((item, index) => (
-                    <li key={index} className="order-item">
-                      <p>Item Name: {item.productId.name}</p>
-                      <p>Quantity: {item.quantity}</p>
-                      <p>Total Cost: KSh {item.productId.price * item.quantity}</p>
-                    </li>
-                  ))}
-                </ul>
-                <p><strong>Total Order Cost:</strong> KSh {order.total}</p>
-                <p><strong>Status:</strong> {status}</p>
+  let status = order.paid && order.delivered ? 'Completed' : order.paid ? 'Paid' : 'Unpaid';
 
-                {status === 'Unpaid' && (
-                  <button onClick={() => handlePayNow(order)} className="pay-now-button">Pay Now</button>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+  return (
+    <li key={order._id}>
+      <h3>Order Summary</h3>
+      <ul className="order-items">
+        {order.items.map((item, index) => (
+          <li key={index} className="order-item">
+            <p><strong>Item Name:</strong> {item.name}</p>
+            <p><strong>Quantity:</strong> {item.quantity}</p>
+            <p><strong>Price per Unit:</strong> KSh {item.price}</p>
+            <p><strong>Total Cost:</strong> KSh {item.price * item.quantity}</p>
+          </li>
+        ))}
+      </ul>
+      <p><strong>Total Order Cost:</strong> KSh {order.total}</p>
+    
+
+      {status === 'Unpaid' && (
+        <button onClick={() => handlePayNow(order)} className="pay-now-button">Pay Now</button>
       )}
+    </li>
+  );
+})}
+
+        </ul>
+        )}
 
 {showPaymentForm && (
   <div className="payment-form-modal">

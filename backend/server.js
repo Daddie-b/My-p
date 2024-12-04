@@ -50,6 +50,7 @@ app.use('/api/about', overviewRoutes);
 app.use('/api/about', bannerRoutes);
 app.use('/api/orders', paymentRoutes);
 
+
 app.delete('/api/products/:id', async (req, res) => {
   const { id } = req.params;
   try {
