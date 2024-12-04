@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProductCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-const ProductCard = ({ product, onAddToCart, onBuyNow }) => {
-  const { name, price, description, image } = product;
+const ProductCard = ({ product, onAddToCart, onBuyNow, onAddToFavorites }) => {
+  const { id, name, price, description, image } = product;
+  const [liked, setLiked] = useState(false);
+
+  const handleLike = () => {
+    setLiked(!liked);
+    onAddToFavorites(product); // Add the product to favorites
+  };
 
   return (
     <div className="product-card">
+      {/* Heart Icon */}
+      <div className="like-icon" onClick={handleLike}>
+        <FontAwesomeIcon icon={faHeart} className={liked ? "liked" : ""} />
+      </div>
       <img src={image} alt={name} className="product-image" />
       <h3 className="product-name">{name}</h3>
       <p className="product-price">KSh {price}</p>

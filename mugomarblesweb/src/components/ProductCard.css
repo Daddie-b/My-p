@@ -1,14 +1,16 @@
-/* General Card Styling */
+/* Ensure the product card is positioned relative for absolute positioning */
 .product-card {
+  position: relative;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
   text-align: center;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-width: 250px; /* Increased card width */
-  margin: 8px; /* Reduced gap between cards */
+  max-width: 250px;
+  margin: 8px;
 }
+
 
 /* Product Image */
 .product-image {
@@ -121,4 +123,92 @@
     padding: 6px 10px;
     font-size: 12px;
   }
+}
+
+
+/* Heart Icon Styling */
+.like-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.like-icon:hover {
+  background-color: rgba(255, 192, 203, 0.8);
+}
+
+.like-icon .fa-heart {
+  color: #d3d3d3;
+  font-size: 18px;
+}
+
+.like-icon .liked {
+  color: #ff6b6b; /* Change to red if liked */
+}
+
+/* Heart Icon Styling */
+.like-icon {
+  position: absolute;
+  top: 10px; /* Adjust distance from the top */
+  right: 10px; /* Adjust distance from the right */
+  background-color: rgba(255, 255, 255, 0.8); /* Subtle background */
+  border-radius: 50%;
+  width: 24px; /* Smaller size */
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for visibility */
+  transition: transform 0.2s, background-color 0.3s ease; /* Add smooth effects */
+  z-index: 2; /* Ensure it’s above the image */
+}
+
+.like-icon:hover {
+  background-color: rgba(255, 192, 203, 0.9); /* Highlight on hover */
+  transform: scale(1.1); /* Slight enlargement on hover */
+}
+
+.like-icon .fa-heart {
+  color: #d3d3d3;
+  font-size: 14px; /* Small and precise */
+}
+
+.like-icon:hover .fa-heart {
+  color: #ff6b6b; /* Red color when hovered */
+}
+
+.like-icon .liked {
+  color: #ff6b6b; /* Red when liked */
+}
+
+
+/* Product Card Styling */
+.product-card {
+  position: relative; /* Needed for icon positioning */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 200px; /* Reduce size for compact layout */
+  margin: 8px;
+}
+
+.product-image {
+  width: 100%; /* Responsive width */
+  height: 150px; /* Fixed height */
+  object-fit: cover; /* Maintain aspect ratio */
+  border-radius: 8px;
 }
